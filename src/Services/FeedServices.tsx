@@ -13,6 +13,25 @@ const feed = async (id: string) => {
   return axios.post("http://localhost:3002/api/v1/home/feed", { userId: id });
 };
 
-const FeedServices = { feed };
+const addComment = async (data: {
+  postId: string;
+  userId: string;
+  text: string;
+}) => {
+  return axios.post("http://localhost:3002/api/v1/home/postComment", data);
+};
+const deleteComment = async (data: { postId: string; commentId: string }) => {
+  return axios.post("http://localhost:3002/api/v1/home/postComment", data);
+};
+
+const likePost = async (data: { userId: string; postId: string }) => {
+  return axios.post("http://localhost:3002/api/v1/home/likePost", data);
+};
+
+const dislikePost = async (data: { userId: string; postId: string }) => {
+  return axios.post("http://localhost:3002/api/v1/home/dislikePost", data);
+};
+
+const FeedServices = { feed, addComment, deleteComment, likePost, dislikePost };
 
 export default FeedServices;
