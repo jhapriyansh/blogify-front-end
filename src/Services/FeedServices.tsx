@@ -32,6 +32,17 @@ const dislikePost = async (data: { userId: string; postId: string }) => {
   return axios.post("http://localhost:3002/api/v1/home/dislikePost", data);
 };
 
-const FeedServices = { feed, addComment, deleteComment, likePost, dislikePost };
+const getUserName = async (userId: string) => {
+  return axios.get(`http://localhost:3002/api/v1/user/getUser/${userId}`);
+};
+
+const FeedServices = {
+  feed,
+  addComment,
+  deleteComment,
+  likePost,
+  dislikePost,
+  getUserName,
+};
 
 export default FeedServices;

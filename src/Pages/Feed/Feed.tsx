@@ -3,6 +3,7 @@ import FeedServices from "../../Services/FeedServices";
 import CommentServices from "../../Services/CommentServices";
 import toast from "react-hot-toast";
 import Navbar from "../../Components/Navbar";
+import Newpost from "../../Components/Newpost";
 
 const Feed = () => {
   const [feedArray, setFeedArray] = useState<
@@ -11,6 +12,8 @@ const Feed = () => {
       title: string;
       body: string;
       createdAt: string;
+      userName: string;
+      createdBy: string;
       likecount: number;
       likedBy: string[];
       comments: string[];
@@ -24,6 +27,7 @@ const Feed = () => {
   const [newComment, setNewComment] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
+  const [newPost, setNewPost] = useState<boolean>(false);
 
   const likePost = async (postId: string) => {
     try {
@@ -49,6 +53,20 @@ const Feed = () => {
       console.log(error);
     }
   };
+
+  // const getUserName = async (id: string) => {
+  //   try {
+  //     const result = await FeedServices.getUserName(id);
+  //     const updatedArr = feedArray.map((obj) =>
+  //       obj.createdBy === id
+  //         ? { ...obj, userName: result.data.userName }
+  //         : obj
+  //     );
+  //     setFeedArray(updatedArr);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const dislikePost = async (postId: string) => {
     try {
@@ -120,13 +138,38 @@ const Feed = () => {
       const lst = localStorage.getItem("blogify");
       if (lst) {
         const user = JSON.parse(lst);
-        const id = user?.data?.user?.id;
-        const userName = user?.data?.user?.userName;
+        const id: string | undefined = user?.data?.user?.id;
+        const userName: string | undefined = user?.data?.user?.userName;
+        if (!id || !userName) return;
+
         setUserName(userName);
         setUserId(id);
+
         try {
           const result = await FeedServices.feed(id);
-          setFeedArray(result.data.feed);
+          const feed = result.data.feed;
+
+          // Collect unique user IDs from feed
+          const uniqueUserIds: string[] = [
+            ...new Set(feed.map((post: any) => post.createdBy)),
+          ];
+
+          // Fetch all usernames in parallel
+          const userIdToNameMap: Record<string, string> = {};
+          await Promise.all(
+            uniqueUserIds.map(async (uid: string) => {
+              const res = await FeedServices.getUserName(uid);
+              userIdToNameMap[uid] = res.data.userName;
+            })
+          );
+
+          // Add userName to each feed post
+          const updatedFeed = feed.map((post: any) => ({
+            ...post,
+            userName: userIdToNameMap[post.createdBy] || "Unknown",
+          }));
+
+          setFeedArray(updatedFeed);
         } catch (err) {
           console.error("Error fetching feed:", err);
         }
@@ -137,8 +180,19 @@ const Feed = () => {
   }, []);
 
   return (
-    <>
+    <div className="relative">
       <Navbar userName={userName} userId={userId} />
+      {newPost && <Newpost userId={userId} setNewPost={setNewPost} />}
+      <div
+        className="text-[#efecd9] fixed bottom-10 right-10 flex justify-center items-center gap-2 bg-[#0a0908] rounded-3xl p-2 select-none hover:bg-[#efecd9] hover:text-[#0a0908] transition-all duration-300 border-2 border-[#0a0908]"
+        onClick={() => {
+          setNewPost(true);
+        }}
+      >
+        <i className="fa-solid text-4xl fa-circle-plus"></i>
+        <p>New Blog</p>
+      </div>
+
       <div className="bg-[#f5f5dc] min-h-screen w-full flex flex-col justify-center items-center py-8">
         {feedArray.map((item) => (
           <div
@@ -147,9 +201,12 @@ const Feed = () => {
           >
             <div className="flex justify-between">
               <p className="p-4 font-bold text-4xl">{item.title}</p>
-              <p className="self-end text-l pr-4 text-gray-500">
-                {item.createdAt.substring(0, 10)}
-              </p>
+              <div className="stamp flex flex-col justify-between p-2">
+                <p className="text-right mr-4 text-xl">{item.userName}</p>
+                <p className="self-end text-l pr-4 text-gray-500">
+                  {item.createdAt.substring(0, 10)}
+                </p>
+              </div>
             </div>
             <hr />
             <p className="p-8 text-wrap text-l text-gray-700">{item.body}</p>
@@ -200,9 +257,8 @@ const Feed = () => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
 export default Feed;
-
