@@ -68,7 +68,7 @@ const Login = () => {
           className="focus:outline-none focus:ring-0 focus:border-transparent bg-white w-[70%] rounded-2xl text-center h-[10%] m-1 text-xl"
         />
         <button
-          className="g-[#c6ac8f] flex text-xl justify-center items-center cursor-default w-[70%] h-[10%] rounded-2xl hover:bg-[#523c23] hover:text-white transition-all duration-150 ease-in"
+          className="bg-[#c6ac8f] flex text-xl justify-center items-center cursor-default w-[70%] h-[10%] rounded-2xl hover:bg-[#523c23] hover:text-white transition-all duration-150 ease-in"
           type="submit"
           onClick={handleLogin}
         >

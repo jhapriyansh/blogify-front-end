@@ -5,9 +5,9 @@ if (lst) {
   user = JSON.parse(lst);
 }
 
-// if (user && user.token) {
+if (user && user.token) {
 axios.defaults.headers.common["Authorization"] = `Bearer ${user.data.token}`;
-// }
+}
 
 const getPostComment = async (id: string) => {
   return axios.get(`http://localhost:3002/api/v1/comments/getComments/${id}`);

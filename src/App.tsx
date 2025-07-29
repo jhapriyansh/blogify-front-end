@@ -4,6 +4,7 @@ import Login from "./Pages/Auth/Login";
 import Register from "./Pages/Auth/Register";
 import { Toaster } from "react-hot-toast";
 import Feed from "./Pages/Feed/Feed";
+import Profile from "./Pages/Profile/Profile";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/feed" element={<Feed />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Toaster />
     </div>
