@@ -13,14 +13,15 @@ const Profile = () => {
     userName: string;
   }>({ _id: "", email: "", userName: "" });
   useEffect(() => {
-    const data: string | null = localStorage.getItem("blogify");
+    const data = localStorage.getItem("blogify");
     if (!data) {
       navigate("/");
+      return;
     }
     const user = JSON.parse(data);
     console.log(user.data.user);
     setUser(user.data.user);
-  }, []);
+  }, [navigate]);
 
   return (
     <>
