@@ -1,69 +1,54 @@
-# React + TypeScript + Vite
+# Blogify Front-End 📝
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Blogify is a modern full-stack blogging web application. This is the **front-end** repository built using **ReactJS**, with a clean UI and seamless integration with the back-end.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 User authentication (login, register)
+- 📝 Create and delete blog posts
+- 💬 Comment on posts
+- 👍 Like / 👎 Remove like functionality
+- 📄 View all posts
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React.js, React Router DOM, Axios, Tailwind CSS
+- **State Management:** React Hooks, LocalStorage
+- **API Calls:** Axios for communication with the back-end
+- **Routing:** React Router
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 📦 Installation
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/jhapriyansh/blogify-front-end.git
+   cd blogify-front-end
+  
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2. **Install dependencies:**
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+   ```bash
+   npm install
+   ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. **Start the development server:**
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+   ```bash
+   npm run dev
+   ```
+
+## 🔗 Back-End Repository
+
+Make sure to pair this with the [Blogify Back-End](https://github.com/jhapriyansh/blogify) for full functionality.
+
+## 🧪 Future Improvements
+
+* 🌐 Deployment via Vercel / Netlify
+* 🛎️ Real-time notifications
+* 🧠 Tags and category filtering
+* 👤 Follow posts
+* 📤 Media upload support
+
+## 📄 License
+
+This project is licensed under the MIT License.
