@@ -22,7 +22,6 @@ const Profile = () => {
     console.log(user.data.user);
     setUser(user.data.user);
   }, [navigate]);
-
   return (
     <>
       <Navbar userId={user._id} userName={user.userName} />
